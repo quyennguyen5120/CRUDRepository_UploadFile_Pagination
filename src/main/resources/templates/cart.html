@@ -1,0 +1,40 @@
+<div th:replace="fragment/header.html"></div>
+
+<div class="container mt-5">
+    <h1>Do hang neeeeeeeeeeeeeeeeeeee</h1>
+    <table class="table text-center">
+        <th>
+            <tr>
+                <td>
+                    Tên sản phẩm
+                </td>
+                <td>
+                    Ảnh sản phẩm
+                </td>
+                <td>
+                    Số lượng
+                </td>
+                <td>
+                    Đơn giá
+                </td>
+                <td>
+                    Tổng tiền
+                </td>
+            </tr>
+        </th>
+        <tbody>
+        <tr th:each="item : ${listCart}">
+            <td th:text="${item.getName()}"></td>
+            <td>
+                <img style="widht:100px;height: 100px" th:src="|@{/uploads/}${item.getImage()}|">
+            </td>
+            <td th:text="${item.getAmount()}">
+            <td th:text="${item.getPrice()}">
+            <td th:text="${item.getTotalPrice()}">
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/product/paycart}" class="text-right btn btn-success">Xem hóa đơn</a>
+</div>
+
+<div th:replace="fragment/footer.html"></div>

@@ -1,0 +1,29 @@
+<div th:replace="fragment/header.html"></div>
+
+<div class="container mt-5">
+    <h1>Lịch sử mua hàng</h1>
+    <table class="table">
+        <th>
+            <tr>
+                <td>Người mua</td>
+                <td>Tên sản phẩm</td>
+                <td>Số lượng mua</td>
+                <td>Đơn giá</td>
+                <td>Tổng tiền đã trả</td>
+                <td>Ngày mua</td>
+            </tr>
+        </th>
+        <tbody>
+            <tr th:each="item :${ht}">
+                <td th:text="${item.getUsername()}"></td>
+                <td th:text="${item.getName()}"></td>
+                <td th:text="${item.getAmount()}"></td>
+                <td th:text="${item.getPrice()}"></td>
+                <td th:text="${item.getTotalPrice()}"></td>
+                <td>04/04/2022</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="fragment/footer.html"></div>

@@ -1,0 +1,76 @@
+<div th:replace="fragment/header.html"></div>
+<div class="container mt-5">
+    <a class="btn btn-primary" th:href="@{/admin/redirectCreate}">Thêm mới</a>
+    <table class="table">
+        <th>
+            <tr>
+                <td>Tên sản phẩm</td>
+                <td>Giá</td>
+                <td>Ảnh</td>
+                <td>Hoạt động</td>
+            </tr>
+        </th>
+        <tbody>
+            <tr th:each="item : ${lstProduct}">
+                <td th:text="${item.getName()}"></td>
+                <td th:text="${item.getPrice()}"></td>
+                <td>
+                    <img style="width: 100px; height: 100px" th:src="|@{/uploads/}${item.getImage()}|">
+                </td>
+                <td class="d-flex">
+                    <a th:href="|@{/admin/redirectUpdate/}${item.getId()}|" class="btn btn-warning">Sửa</a>
+                    <a th:href="|@{/admin/deleteProduct/}${item.getId()}|" class=" ml-2 btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="mt-5" >
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" >
+                <li class="page-item"><a class="page-link" onclick="buttonPrev()" href="#">Previous</a></li>
+                <li class="page-item" th:th:classappend="${pageIndex == item} ? 'active' : ''" th:each="item : ${#numbers.sequence(1, numberPage)}">
+                    <button th:th:classappend="${pageIndex == item} ? 'isActive' : ''" class="page-link zxc" th:value="${item}" href="#" th:onclick="|redirect(${item})|" th:text="${item}"></button>
+                    <!--                    th:href="|@{/product/}${item}/0|" -->
+                </li>
+                <li class="page-item"><a class="page-link" onclick="buttonNext()" href="#">Next</a></li>
+                <span class="page-list ml-2">
+                <span class="btn-group dropup">
+                    <select id="abc" onchange="redirect_(this.value)" name="pageSize" class="form-control">
+                        <option th:selected="${pageSize == 1}" value="1">1</option>
+                         <option th:selected="${pageSize == 2}" value="2">2</option>
+                         <option th:selected="${pageSize == 3}" value="3">3</option>
+                        <option th:selected="${pageSize == 5}" value="5">5</option>
+                         <option th:selected="${pageSize == 10}" value="10">10</option>
+                    </select>
+                </span> bản ghi mỗi trang
+            </span>
+            </ul>
+        </nav>
+    </div>
+</div>
+<script>
+
+    function redirect(value){
+        var pageIndex = value;
+        var pageSize = $('#abc').val();
+        location = "/admin/"+pageIndex+"/"+pageSize;
+    }
+    function  redirect_(value){
+        var pageIndex = document.getElementsByClassName("isActive")[0].value;
+        var pageSize = value;
+        location = "/admin/"+pageIndex+"/"+pageSize;
+    }
+    function buttonPrev(){
+        var pageSize = $('#abc').val();
+        var pageIndex = parseInt(document.getElementsByClassName("isActive")[0].value);
+        pageIndex-=1;
+        location = "/admin/"+pageIndex+"/"+pageSize;
+    }
+    function buttonNext(){
+        var pageSize = $('#abc').val();
+        var pageIndex = parseInt(document.getElementsByClassName("isActive")[0].value);
+        pageIndex+=1;
+        location = "/admin/"+pageIndex+"/"+pageSize;
+    }
+</script>
+<div th:replace="fragment/footer.html"></div>
